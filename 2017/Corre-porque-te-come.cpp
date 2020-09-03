@@ -57,7 +57,7 @@ void dfs(ll u,ll f,ll up){
   anc[u][0] = f;
   mini[u][0] = up;
   f(i,1,20) anc[u][i] = anc[ anc[u][i-1] ][i-1];
-  f(i,1,20) mini[u][i] = min(mini[u][i-1],mini[ anc[u][i-1] ][u-1] );
+  f(i,1,20) mini[u][i] = min(mini[u][i-1],mini[ anc[u][i-1] ][i-1] );
 
   for(ii it:adj[u]){
     ll v = it.ff;
@@ -99,10 +99,14 @@ int main(){
   cin >> n >> m;
   ll u,v,q;
   f(i,1,n+1) p[i] = i;
+  
   f(i,0,m) cin >> edges[i].u >> edges[i].v >> edges[i].w;
+
   sort(edges,edges + m);
+  
   f(i,0,m){
-    u = edges[i].u,v = edges[i].v;
+    u = edges[i].u;
+    v = edges[i].v;
     if(find(u)!=find(v)){
       adj[u].push_back({v,edges[i].w});
       adj[v].push_back({u,edges[i].w});
@@ -112,11 +116,12 @@ int main(){
   dfs(1,1,inf);
 
   cin >> q;
+
   while(q--){
     cin >> u >> v;
     ll g = lca(u,v);
-  
-    cout << min(dist(g,u),dist(g,v))  - 1<< endl;
+    ll ans = min(dist(g,u),dist(g,v))-1;
+    cout << ans << endl;
   } 
   
 }
